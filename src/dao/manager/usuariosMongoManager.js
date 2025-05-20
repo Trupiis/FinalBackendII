@@ -1,10 +1,10 @@
 import { UsuariosModelo } from "../models/user.model.js";
 
-export class UsusarioMongoManager {
+class UsuarioMongoManager {
     
-    static async createUser(user){
+    async createUser(userData){
         try {
-            const newUser = await UsuariosModelo.create(user)
+            const newUser = await UsuariosModelo.create(userData)
             return newUser
         } catch (error) {
             console.log(error)
@@ -12,7 +12,7 @@ export class UsusarioMongoManager {
         }
     }
 
-    static async getUserByEmail(email){
+    async getUserByEmail(email){
         try {
             const user = await UsuariosModelo.findOne({email})
             return user
@@ -22,7 +22,7 @@ export class UsusarioMongoManager {
         }
     }
 
-    static async getUserById(id){
+    async getUserById(id){
         try {
             const user = await UsuariosModelo.findById(id)
             return user
@@ -33,3 +33,8 @@ export class UsusarioMongoManager {
     }
 
 }
+
+const usuariosMongoManager = new UsuarioMongoManager();
+
+export default usuariosMongoManager;
+
