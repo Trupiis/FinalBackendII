@@ -6,7 +6,7 @@ import userService from "../services/user.service.js"
 const register = async(req, res, next) =>{
 
     try{
-        const result = await userService.register(req.body)
+        const result = await userService.registerUser(req.body)
         res.status(201).json({status: "success", message: "Usuario registrado con certeza", user: result.user})
     }catch (error){
         console.error("Error al registrar a el usuario", error);

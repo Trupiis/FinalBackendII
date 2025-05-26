@@ -15,7 +15,10 @@ import passport from "passport"
 
 //Import routers
 import sessionsRouter from "./routes/sessions.router.js"
-
+import cartsRouter from "./routes/cart.router.js"
+import productsRouter from "./routes/product.router.js"
+import ticketsRouter from "./routes/ticket.router.js"
+import usersRouter from "./routes/user.router.js"
 
 //Iniciar SV
 const app = express()
@@ -47,6 +50,10 @@ app.use(methodOverride('_method'));
 
 //Routers
 app.use("/api/sessions", sessionsRouter)
+app.use("/api/carts", cartsRouter)
+app.use("/api/users", usersRouter)
+app.use("/api/tickets", ticketsRouter)
+app.use("/api/products", productsRouter)
 
 
 //MONGODB
