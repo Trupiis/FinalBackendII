@@ -72,8 +72,9 @@ export const updateProduct = async (req, res) => {
 export const deleteProduct = async (req, res) => {
     try {
         await productService.deleteProduct(req.params.pid);
-        res.status(204).send();
+        res.status(200).json({ status: "success", message: "Producto eliminado correctamente" });
     } catch (error) {
-        res.status(500).json({ status: "error", message: error.message });
+        const statusCode = error.statusCode || 500;
+        res.status(statusCode).json({ status: "error", message: error.message });
     }
 };

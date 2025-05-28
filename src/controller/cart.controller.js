@@ -8,7 +8,7 @@ export const createCart = async (req, res) => {
     try {
         console.log("📥 Datos recibidos en createCart:", req.body);
 
-        const { selectedProducts } = req.body;
+        const selectedProducts = req.body?.selectedProducts || [];
 
 
         let productsWithQuantities = [];
@@ -181,7 +181,7 @@ export const deleteCart = async (req, res) => {
 export const purchaseCart = async (req, res) => {
     try {
         const { cid } = req.params;
-        const userEmail = req.user.email; // Obtener email del usuario autenticado
+        const userEmail = req.user.email; 
 
         console.log(`\n\n🛒 Iniciando proceso de compra para carrito ${cid} por usuario ${userEmail}`);
         console.log("req.params:", req.params);
@@ -249,10 +249,13 @@ export const purchaseCart = async (req, res) => {
                 }
             }
 
+            const code = Math.random().toString(36).substring(2, 10).toUpperCase(); 
+
             const ticketData = {
-                purchase_datetime: new Date(),
+                code: Math.random().toString(36).substring(2, 10).toUpperCase(),
+                buy_datetime: new Date(),
                 amount: totalAmount,
-                purchaser: userEmail,
+                buyer: userEmail,
                 products: productsToPurchase.map(item => ({   
                     product: item.product,
                     quantity: item.quantity
@@ -304,10 +307,11 @@ export const purchaseCart = async (req, res) => {
             productsNotPurchased: productsNotPurchasedIds 
         });
 
-    } catch (error) {
-        console.error(`❌ Error general en purchaseCart para carrito ${req.params.cid}:`, error);
-        res.status(500).json({ status: 'error', message: 'Error interno del servidor durante la compra.' });
-    }
+    } catch (ticketError) {
+        console.error(`❌ Error al crear el ticket:`, ticketError, "Datos del ticket:", ticketData);
+        return res.status(500).json({ status: 'error', message: 'Error al generar el ticket de compra' });
+}
+
 };
 
 
