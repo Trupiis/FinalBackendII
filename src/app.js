@@ -19,6 +19,7 @@ import cartsRouter from "./routes/cart.router.js"
 import productsRouter from "./routes/product.router.js"
 import ticketsRouter from "./routes/ticket.router.js"
 import usersRouter from "./routes/user.router.js"
+import mocksRouter from "./routes/mocks.router.js"
 
 //Iniciar SV
 const app = express()
@@ -54,6 +55,7 @@ app.use("/api/carts", cartsRouter)
 app.use("/api/users", usersRouter)
 app.use("/api/tickets", ticketsRouter)
 app.use("/api/products", productsRouter)
+app.use("/api/mocks", mocksRouter)
 
 
 //MONGODB
