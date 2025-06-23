@@ -7,10 +7,88 @@ import UserDTO from "../dtos/user.dto.js";
 
 const router = Router();
 
+
+/**
+ * @swagger
+ * /api/sessions/login:
+ *   post:
+ *     summary: Inicia sesión de usuario
+ *     tags: [Sessions]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Login exitoso, devuelve token o redirección
+ *       401:
+ *         description: Credenciales inválidas
+ */
 router.post("/login", login)
 
+/**
+ * @swagger
+ * /api/sessions/registro:
+ *   post:
+ *     summary: Registra un nuevo usuario
+ *     tags: [Sessions]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               first_name:
+ *                 type: string
+ *               last_name:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: Registro exitoso
+ *       400:
+ *         description: Error en el registro
+ */
 router.post("/registro", register)
 
+/**
+ * @swagger
+ * /api/sessions/registro:
+ *   post:
+ *     summary: Registra un nuevo usuario
+ *     tags: [Sessions]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               first_name:
+ *                 type: string
+ *               last_name:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: Registro exitoso
+ *       400:
+ *         description: Error en el registro
+ */
 router.get('/current',
     (req, res, next) => {
       passport.authenticate('jwt', { session: false }, (err, user, info) => {
@@ -33,5 +111,15 @@ router.get('/current',
   );
   
 
+  /**
+ * @swagger
+ * /api/sessions/logout:
+ *   get:
+ *     summary: Cierra sesión de usuario
+ *     tags: [Sessions]
+ *     responses:
+ *       200:
+ *         description: Sesión cerrada exitosamente
+ */
 router.get("/logout", logout)
 export default router

@@ -12,6 +12,8 @@ import methodOverride from 'method-override';
 import MongoStore from "connect-mongo"
 import cookieParser from "cookie-parser"
 import passport from "passport"
+import swaggerJSDoc from "swagger-jsdoc"
+import swaggerUi from "swagger-ui-express"
 
 //Import routers
 import sessionsRouter from "./routes/sessions.router.js"
@@ -26,6 +28,20 @@ const app = express()
 const PORT = process.env.PORT || 8080
 
 console.log("MONGO_URL:", process.env.MONGO_URL);
+
+const swaggerOptions = {
+    definition: {
+        openapi: '3.0.1',
+        info: {
+            title: 'Documentación de API Backend 3',
+            description: 'API de e-commerce con endpoints de usuarios, productos y generación de datos con mocks'
+        }
+    },
+    apis: ['./src/routes/*.js']
+}
+
+const specs = swaggerJSDoc(swaggerOptions)
+
 
 app.use(sessions({
     secret: process.env.SECRET_KEY,
@@ -56,6 +72,8 @@ app.use("/api/users", usersRouter)
 app.use("/api/tickets", ticketsRouter)
 app.use("/api/products", productsRouter)
 app.use("/api/mocks", mocksRouter)
+app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(specs))
+
 
 
 //MONGODB
