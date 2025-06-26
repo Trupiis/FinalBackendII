@@ -14,6 +14,14 @@ const cookieExtractor = req => {
   return token;
 };
 
+const options = {
+  jwtFromRequest: (req) => {
+    return ExtractJwt.fromAuthHeaderAsBearerToken()(req) || cookieExtractor(req);
+  },
+  secretOrKey: config.SECRET_KEY,
+};
+
+
 export const initPassport = () =>{
     passport.use("Login", new local.Strategy(
         {usernameField: "email"},
@@ -97,10 +105,7 @@ passport.deserializeUser(async (id, done) => {
 });
 
 
-passport.use("jwt", new JwtStrategy({
-    jwtFromRequest: cookieExtractor,
-    secretOrKey: config.SECRET_KEY,
-}, async(jwt_payload, done) => {
+passport.use("jwt", new JwtStrategy(options, async (jwt_payload, done) => {
     try{
         const user = await usuarioMongoManager.getUserById(jwt_payload.sub);
         

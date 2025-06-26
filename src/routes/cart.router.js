@@ -92,7 +92,7 @@ router.get('/:cid', JWTauth, getCartById);
  *         description: Producto agregado al carrito
  */
 
-router.post('/:cid/products/:pid', JWTauth, authorize('user'), addProductToCart);
+router.post('/:cid/products/:pid', JWTauth, authorize(['user', 'admin']), addProductToCart);
 
 /**
  * @swagger

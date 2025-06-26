@@ -11,3 +11,5 @@ export const ProductosModelo = mongoose.model("product", new mongoose.Schema({
 })
     .plugin(mongoosePaginate)
 )
+
+export default ProductosModelo;

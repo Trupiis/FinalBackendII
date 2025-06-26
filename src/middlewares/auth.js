@@ -1,6 +1,6 @@
 import passport from 'passport';
 
-export const isAuth = passport.authenticate('jwt', { session: false });
+export const isAuth = passport.authenticate("jwt", { session: false });
 
 const isAdmin = (req, res, next) => {
     if (req.user && req.user.role === 'admin') {

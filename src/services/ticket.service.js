@@ -6,7 +6,7 @@ class TicketService {
     }
 
     async getAllTickets() {
-        return await ticketRepository.model.find();
+        return await ticketRepository.getAll();
     }
 
     async getTicketById(ticketId) {
@@ -14,7 +14,7 @@ class TicketService {
     }
 
     async getTicketByCode(ticketCode) {
-        return await ticketRepository.model.findOne({ code: ticketCode });
+        return await ticketRepository.findByCode(ticketCode);
     }
 }
 
